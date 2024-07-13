@@ -90,25 +90,20 @@ class PlaylistPage extends StatelessWidget {
                   ),
                 ],
               ),
-
               SizedBox(
-                height: 210,
+                height: 220,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[
                     _buildAlbumCard('Taylor Swift', 'assets/taylor_swift.jpg',
-                        context, TaylorSwiftPlayerScreen(),
-                        textColor: Colors.black),
+                        context, TaylorSwiftPlayerScreen()),
                     _buildAlbumCard('Arijit Singh', 'assets/arijit_singh.jpg',
-                        context, ArijitSinghPlayerScreen(),
-                        textColor: Colors.black),
+                        context, ArijitSinghPlayerScreen()),
                     _buildAlbumCard('Sid Sriram', 'assets/sid_sriram.jpg',
-                        context, SidSriramPlayerScreen(),
-                        textColor: Colors.black),
+                        context, SidSriramPlayerScreen()),
                   ],
                 ),
               ),
-
               const SizedBox(height: 32),
               const Text(
                 'Artists',
@@ -118,30 +113,27 @@ class PlaylistPage extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-
               const SizedBox(height: 16),
-
-              SizedBox(
-                height: 210,
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Number of columns in the grid
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0,
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    return _buildAlbumCard(
-                      'Artist $index',
-                      'assets/artists/artist$index.jpeg',
-                      context,
-                      Container(),
-                      textColor: Colors.black,
-                    );
-                  },
-                  itemCount: 6, // Adjust the number of dummy artists as needed
+              GridView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 16.0,
+                  mainAxisSpacing: 16.0,
+                  childAspectRatio: 0.75,
                 ),
+                itemBuilder: (BuildContext context, int index) {
+                  return _buildArtistCard(
+                    'Artist $index', 
+                    'assets/artists/artist$index.jpeg',
+                    context,
+                    Container(), 
+                  );
+                },
+                itemCount: 6, 
               ),
-
+              const SizedBox(height: 32),
               const Text(
                 'Songs',
                 style: TextStyle(
@@ -159,8 +151,7 @@ class PlaylistPage extends StatelessWidget {
   }
 
   Widget _buildAlbumCard(
-      String title, String imagePath, BuildContext context, Widget playerScreen,
-      {Color? textColor}) {
+      String title, String imagePath, BuildContext context, Widget playerScreen) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -170,30 +161,56 @@ class PlaylistPage extends StatelessWidget {
           ),
         );
       },
-      child: Card(
-        margin: const EdgeInsets.all(8.0),
+      child: Container(
+        width: 160,
+        margin: const EdgeInsets.only(right: 16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              imagePath,
-              width: 150,
-              height: 150,
-              fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.asset(
+                imagePath,
+                width: 160,
+                height: 160,
+                fit: BoxFit.cover,
+              ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: textColor ?? Colors.white,
-                ),
+            const SizedBox(height: 8),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildArtistCard(
+      String title, String imagePath, BuildContext context, Widget playerScreen) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => playerScreen,
+          ),
+        );
+      },
+      child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.asset(
+                imagePath,
+                width: 160,
+                height: 160,
+                fit: BoxFit.cover,
+              ),
+            ),
     );
   }
 }
