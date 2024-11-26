@@ -1,11 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:beat_blitz/screens/playlist.dart';
-
-// import 'package:beat_blitz/screens/home.dart';
-import 'package:beat_blitz/screens/my_library.dart'; 
-import 'package:beat_blitz/screens/play.dart'; 
-import 'package:beat_blitz/screens/settings.dart'; 
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +6,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +18,12 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const HomePage(),
-      routes: {
-      
-        '/playlist': (context) =>  const PlaylistPage(), 
-        '/my_library': (context) => LibraryPage(),
-        '/play': (context) => PlayScreen(),
-        '/settings': (context) => SettingsScreen(),
-      },
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -65,16 +51,12 @@ class HomePage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 400),
-
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const PlaylistPage()),
-                    );
+                    // Add your navigation logic here
                   },
-                  child: Text(
+                  child: const Text(
                     'Get Started',
                     style: TextStyle(
                       fontSize: 16,
